@@ -17,11 +17,17 @@
     "url": "https://github.com/Kikobeats/map-values-deep/issues"
   },
   "keywords": [
+    "array",
+    "circular",
     "deep",
-    "values",
+    "json",
     "lodash",
     "map",
-    "recursive"
+    "nested",
+    "object",
+    "primitive",
+    "recursive",
+    "values"
   ],
   "devDependencies": {
     "@commitlint/cli": "latest",
