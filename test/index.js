@@ -26,3 +26,8 @@ test('transforms array with nested objects/arrays', t => {
     [25, 36]
   ])
 })
+
+test('Do nothing on non plain objects', t => {
+  const now = new Date()
+  t.deepEqual(map(now, square), now)
+})
