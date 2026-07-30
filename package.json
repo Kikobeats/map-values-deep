@@ -1,7 +1,7 @@
 {
   "name": "map-values-deep",
-  "description": "Recursive lodash.mapValues",
-  "homepage": "https://nicedoc.io/Kikobeats/map-values-deep",
+  "description": "Recursively map object and array values with a customizer — deep lodash.mapValues.",
+  "homepage": "https://github.com/Kikobeats/map-values-deep",
   "version": "1.0.2",
   "main": "index.js",
   "author": {
@@ -9,6 +9,12 @@
     "name": "Kiko Beats",
     "url": "https://kikobeats.com"
   },
+  "contributors": [
+    {
+      "name": "Daniel Shmuglin",
+      "email": "daniels@wix.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kikobeats/map-values-deep.git"
@@ -18,33 +24,30 @@
   },
   "keywords": [
     "array",
-    "circular",
     "deep",
     "json",
     "lodash",
     "map",
     "nested",
     "object",
-    "primitive",
     "recursive",
+    "transform",
     "values"
   ],
   "devDependencies": {
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
-    "ava": "latest",
+    "c8": "latest",
     "ci-publish": "latest",
-    "conventional-github-releaser": "latest",
     "coveralls": "latest",
     "finepack": "latest",
     "git-authors-cli": "latest",
     "git-dirty": "latest",
-    "husky": "latest",
-    "lint-staged": "latest",
+    "github-generate-release": "latest",
     "lodash": "latest",
-    "npm-check-updates": "latest",
+    "nano-staged": "latest",
     "nyc": "latest",
-    "prettier-standard": "latest",
+    "simple-git-hooks": "latest",
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest"
@@ -60,45 +63,42 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "standard-markdown README.md && standard",
     "postrelease": "npm run release:tags && npm run release:github && ci-publish --access=public",
-    "precommit": "lint-staged",
-    "prerelease": "npm run update:check",
     "pretest": "npm run lint",
     "release": "git-authors-cli finepack && git add package.json && standard-version -a",
-    "release:github": "conventional-github-releaser -p angular",
+    "release:github": "github-generate-release",
     "release:tags": "git push --follow-tags origin HEAD:master",
-    "test": "nyc ava",
-    "update": "ncu -a",
-    "update:check": "ncu -- --error-level 2"
+    "test": "c8 ava",
+    "update": "ncu -a"
   },
   "license": "MIT",
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
+    ],
+    "rules": {
+      "body-max-line-length": [
+        0
+      ]
     }
   },
-  "lint-staged": {
+  "nano-staged": {
     "linters": {
-      "package.json": [
-        "finepack",
-        "git add"
-      ],
       "*.js": [
-        "prettier-standard",
-        "git add"
+        "git add",
+        "prettier-standard"
       ],
       "*.md": [
-        "standard-markdown",
+        "git add",
+        "standard-markdown"
+      ],
+      "package.json": [
+        "finepack",
         "git add"
       ]
     }
   },
-  "contributors": [
-    "Daniel Shmuglin <daniels@wix.com>"
-  ]
+  "simple-git-hooks": {
+    "commit-msg": "npx commitlint --edit",
+    "pre-commit": "npx nano-staged"
+  }
 }
